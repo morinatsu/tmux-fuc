@@ -16,7 +16,7 @@ readonly fuc_key="$(get_tmux_option "@fuc-key" "e")"
 readonly fuc_path="$(get_tmux_option "@fuc-path" "${HOME}/.fuc")"
 
 tmux bind-key "$fuc_key" \
-  split-window -l 10 "grep -hE '^\\$' ${fuc_path}/*.md | sed 's/^\\$ //' | peco | pbcopy -"
+  split-window -l 10 "grep -hE '^\\$' ${fuc_path}/*.md | sed 's/^\\$ //' | peco | xsel --clipboard --input"
 
 # Local Variables:
 # mode: Shell-Script
