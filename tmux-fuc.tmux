@@ -15,8 +15,16 @@ get_tmux_option() {
 readonly fuc_key="$(get_tmux_option "@fuc-key" "e")"
 readonly fuc_path="$(get_tmux_option "@fuc-path" "${HOME}/.fuc")"
 
+if [ "$(uname)" == 'Darwin' ]; then
+  #mac
+  copy_command='pbcopy -'
+elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+  #linux
+  copy_command='xsel --clipboard --input'
+fi
+
 tmux bind-key "$fuc_key" \
-  split-window -l 10 "grep -hE '^\\$' ${fuc_path}/*.md | sed 's/^\\$ //' | peco | xsel --clipboard --input"
+  split-window -l 10 "grep -hE '^\\$' ${fuc_path}/*.md | sed 's/^\\$ //' | peco | ${copy_command}"
 
 # Local Variables:
 # mode: Shell-Script
